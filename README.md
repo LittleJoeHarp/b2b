@@ -136,7 +136,7 @@ The Streamlit interface allows you to:
 | **TalentScout**          | Resume analysis & shortlisting      | Uses keyword/semantic search      |
 | **Onboarder**            | Creates structured onboarding plans | Uses templates or generated steps |
 | **Manager/Orchestrator** | Coordinates between agents          | Maintains shared memory           |
-| **Memory System**        | Stores conversation context         | Enables long-term reference       |
+| **Memory System**        | Stores conversation context         | Enables short-term reference       |
 
 ---
 
