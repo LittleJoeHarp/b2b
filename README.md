@@ -1,45 +1,47 @@
-# b2b
-This repository contains a **Streamlit-based Business-to-Business (B2B) and job matching web app**, along with a supporting Jupyter notebook for data exploration and feature development.  
-It is designed for easy local deployment and experimentation with datasets to automate job matching, PDF parsing, and business data analytics.
+
+# Multi-Agent Automation System for Resume Screening, Onboarding & Policy Q&A
+
+## Problem Statement
+
+**Hackathon Problem Statement 2**
+
+**Build Phase:**  
+Deliver a **multi-agent automation solution** that handles:
+- Resume screening  
+- Onboarding plan creation  
+- Policy question answering  
+
+The system must include a **memory system** so that agents can maintain context across conversations.
+
+**Suggested Roles (optional):**
+- TalentScout — for candidate parsing & screening  
+- Onboarder — for onboarding plan creation  
+- Manager / Orchestrator — for coordinating agents & memory updates  
+
+Teams may design additional or alternate agent roles.
+
+**Break Phase:**  
+Test robustness against:
+- Bias amplification  
+- Prompt injection  
+- Data manipulation or logic cascades  
+- Fairness, correctness, or availability issues  
 
 ---
 
-## Table of Contents
-- [Overview](#overview)
-- [Repository Structure](#repository-structure)
-- [1. Prerequisites](#1-prerequisites)
-- [2. Setup and Installation](#2-setup-and-installation)
-- [3. Running the App Locally](#3-running-the-app-locally)
-- [4. Running the Jupyter Notebook](#4-running-the-jupyter-notebook)
-- [5. Expected Dependencies](#5-expected-dependencies)
-- [6. System Requirements](#6-system-requirements)
-- [7. Evaluation & Verification](#7-evaluation--verification)
-- [8. Troubleshooting](#8-troubleshooting)
-- [9. Contribution](#9-contribution)
----
+## Repository Overview
 
-## Overview
-
-The **B2B Job Finder** app provides an AI-assisted pipeline for:
-- Parsing structured data (like PDFs or Excel files),
-- Matching candidates or companies using configurable filters,
-- Visualizing relevant statistics interactively through Streamlit.
-
-It integrates machine learning / text processing components and supports local PDF data extraction using `pdfplumber`.
-
----
-
-## Repository Structure
+This repository implements a **multi-agent architecture** using Streamlit for the interface and Python backend scripts for agent orchestration.
 
 ```
 
 b2b/
 │
-├── app_complete.py              # Streamlit app entry point
-├── Company_Job_Finder.ipynb     # Jupyter notebook for exploration
-├── requirements.txt             # All Python dependencies
-├── data/                        # (optional) Directory for local CSVs/PDFs
-└── README.md                    # Project documentation (this file)
+├── app_complete.py             # Main Streamlit app — runs the multi-agent system
+├── Company_Job_Finder.ipynb    # Exploratory notebook (data preparation / resume screening)
+├── requirements.txt            # Dependencies for reproducibility
+├── README.md                   # This documentation
+└── agents/                     # (optional) Agent role scripts if modularized
 
 ````
 
@@ -47,29 +49,30 @@ b2b/
 
 ## 1. Prerequisites
 
-| Tool | Version | Notes |
-|------|----------|-------|
-| **Python** | 3.8 – 3.11 | Recommended: 3.10 |
-| **pip** | ≥ 22.0 | For installing packages |
-| **Git** | Any recent version | For cloning the repository |
-| **Streamlit** | ≥ 1.25 | For running the web app |
-| **Jupyter** | ≥ 6.5 | Optional, for `.ipynb` notebook |
+| Tool | Version | Purpose |
+|------|----------|----------|
+| **Python** | 3.10+ | Required runtime |
+| **pip** | ≥ 22.0 | Dependency management |
+| **Git** | Any | Clone repo |
+| **Streamlit** | ≥ 1.25 | Web app frontend |
+| **Jupyter** | Optional | For running notebook |
 
-> On Windows, **WSL (Ubuntu)** is recommended for a smoother experience with Python environments.
+> Works on Linux, macOS, and Windows (via PowerShell or WSL).
 
 ---
 
-## 2. Setup and Installation
+## 2. Setup Instructions — Reproduce Local Runs
 
-### Step 1 — Clone the repository
+### Step 1 — Clone the Repository
+
 ```bash
 git clone https://github.com/LittleJoeHarp/b2b.git
 cd b2b
 ````
 
-### Step 2 — Create a virtual environment
+### Step 2 — Create a Virtual Environment
 
-**Linux / macOS:**
+**Linux/macOS:**
 
 ```bash
 python3 -m venv .venv
@@ -83,171 +86,159 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-### Step 3 — Install dependencies
-
-Make sure `pip` is up to date:
+### Step 3 — Install Dependencies
 
 ```bash
 python -m pip install --upgrade pip
-```
-
-Then install required packages:
-
-```bash
 pip install -r requirements.txt
 ```
 
-If you don’t have `requirements.txt`, create it manually using:
+If `requirements.txt` is missing or incomplete, run:
 
 ```bash
-pip install streamlit pdfplumber pandas numpy matplotlib scikit-learn openpyxl PyYAML tqdm
+pip install streamlit pdfplumber pandas numpy scikit-learn matplotlib PyYAML openpyxl
 pip freeze > requirements.txt
 ```
 
 ---
 
-## 3. Running the App Locally
+## 3. Running the Application
 
-Once the dependencies are installed, run the Streamlit app:
+### Streamlit App
+
+Launch the interactive dashboard (agents + memory system):
 
 ```bash
 streamlit run app_complete.py
 ```
 
-This will start a local server (default port **8501**).
-Open the browser and go to [http://localhost:8501](http://localhost:8501)
+Default URL: [http://localhost:8501](http://localhost:8501)
 
-If you need a different port:
+If the port is in use:
 
 ```bash
 streamlit run app_complete.py --server.port 8502
 ```
 
+The Streamlit interface allows you to:
+
+* Upload resumes (PDF or CSV)
+* Trigger multi-agent workflows for screening and onboarding
+* Ask policy-related queries
+* View memory context and agent interactions
+
 ---
 
-## 4. Running the Jupyter Notebook
+## 4. Agent Roles & Architecture Overview
 
-If you want to explore or test the notebook:
-
-```bash
-pip install jupyterlab notebook
-jupyter notebook Company_Job_Finder.ipynb
-```
-
-You can also open it in **VS Code** or **JupyterLab**.
-
-Run all cells sequentially to reproduce the notebook’s results.
+| Agent                    | Description                         | Key Function                      |
+| ------------------------ | ----------------------------------- | --------------------------------- |
+| **TalentScout**          | Resume analysis & shortlisting      | Uses keyword/semantic search      |
+| **Onboarder**            | Creates structured onboarding plans | Uses templates or generated steps |
+| **Manager/Orchestrator** | Coordinates between agents          | Maintains shared memory           |
+| **Memory System**        | Stores conversation context         | Enables long-term reference       |
 
 ---
 
 ## 5. Expected Dependencies
 
-Below is a typical dependency list that supports this app:
+Core dependencies (from `requirements.txt`):
 
-| Package            | Purpose                                                 |
-| ------------------ | ------------------------------------------------------- |
-| `streamlit`        | Web app frontend framework                              |
-| `pdfplumber`       | PDF parsing and text extraction                         |
-| `pandas`, `numpy`  | Data processing and manipulation                        |
-| `matplotlib`       | Visualization                                           |
-| `scikit-learn`     | ML / data preprocessing (if used in job matching logic) |
-| `openpyxl`, `xlrd` | Excel read/write support                                |
-| `PyYAML`, `tqdm`   | Configuration and progress bars                         |
+```
+streamlit>=1.25
+pandas>=2.0
+numpy>=1.25
+pdfplumber>=0.10
+scikit-learn>=1.4
+matplotlib>=3.9
+PyYAML>=6.0
+openpyxl>=3.1
+tqdm>=4.66
+```
 
-You can verify installation with:
+Install all at once:
 
 ```bash
-pip list
+pip install -r requirements.txt
 ```
 
 ---
 
-## 6. System Requirements
+## 6. Resource Requirements
 
-| Resource         | Minimum      | Recommended                   |
-| ---------------- | ------------ | ----------------------------- |
-| **CPU**          | Dual-core    | Quad-core+                    |
-| **Memory (RAM)** | 4 GB         | 8 GB+                         |
-| **Disk Space**   | 500 MB       | 1 GB (with datasets)          |
-| **GPU**          | Not required | Optional (if ML models added) |
+| Resource    | Minimum       | Recommended                    |
+| ----------- | ------------- | ------------------------------ |
+| **CPU**     | 2 cores       | 4 cores                        |
+| **RAM**     | 4 GB          | 8 GB                           |
+| **Disk**    | 500 MB        | 1 GB+                          |
+| **GPU**     | Not required  | Optional for ML resume parsing |
+| **Network** | Offline/local | Optional API access for LLMs   |
+
+> The project runs comfortably on laptops with Python 3.10+ and 8 GB RAM.
 
 ---
 
 ## 7. Evaluation & Verification
 
-### App verification
+### Functionality Evaluation
 
-After running:
+| Task                 | Expected Behavior                                                     |
+| -------------------- | --------------------------------------------------------------------- |
+| **Resume Screening** | Upload a PDF; system extracts skills & recommends shortlist           |
+| **Onboarding Plan**  | Generates tailored onboarding schedule                                |
+| **Policy Q&A**       | User asks HR or company-related queries; system responds contextually |
+| **Memory Recall**    | User follow-ups reference prior context                               |
 
-```bash
-streamlit run app_complete.py
-```
+### Break Phase Evaluation
 
-Check:
+Test your system for:
 
-* The browser opens the Streamlit interface.
-* No `ModuleNotFoundError` or traceback appears in the terminal.
-* UI elements load properly (buttons, uploaders, text fields).
-* Upload a sample file (PDF or CSV) and confirm that results / analysis appear correctly.
+* **Bias Amplification:** check hiring decisions across diverse resumes.
+* **Prompt Injection:** inject malicious text into resumes; verify safe outputs.
+* **Logic Cascades:** chain of dependent agent decisions—observe failure points.
+* **Fairness & Availability:** ensure balanced treatment and no downtime under repeated queries.
 
-### Notebook verification
+### Example Validation Workflow
 
-* Launch Jupyter and run all cells in `Company_Job_Finder.ipynb`.
-* Verify that:
+1. Run:
 
-  * All cells execute without errors.
-  * Dataframes / charts are displayed.
-  * Any intermediate files (e.g., outputs) are created in the local directory.
+   ```bash
+   streamlit run app_complete.py
+   ```
+2. Upload 2–3 resumes (`data/sample_resume.pdf`)
+3. Ask:
 
-### Optional Test Run
-
-If you wish to verify imports:
-
-```bash
-python -c "import streamlit, pdfplumber, pandas, numpy; print('All good!')"
-```
+   > “Compare the shortlisted candidates and generate onboarding plan.”
+4. Confirm multi-agent reasoning & stored memory retrieval.
+5. In “break mode,” add biased text to resume and check output neutrality.
 
 ---
 
 ## 8. Troubleshooting
 
-| Problem                                      | Cause                                    | Solution                                           |
-| -------------------------------------------- | ---------------------------------------- | -------------------------------------------------- |
-| `ModuleNotFoundError: pdfplumber`            | Missing package                          | `pip install pdfplumber`                           |
-| Streamlit Cloud deployment fails             | Missing dependency in `requirements.txt` | Add all imports to `requirements.txt` and redeploy |
-| `ImportError: openpyxl`                      | Missing Excel library                    | `pip install openpyxl`                             |
-| App shows “Error has been redacted”          | Streamlit Cloud sandbox error            | Debug locally first, check logs via “Manage App”   |
-| `OSError: [Errno 98] Address already in use` | Port conflict                            | Use another port: `--server.port 8502`             |
+| Issue                             | Cause                                    | Solution                                 |
+| --------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `ModuleNotFoundError: pdfplumber` | Missing package                          | `pip install pdfplumber`                 |
+| App fails on Streamlit Cloud      | Missing dependency in `requirements.txt` | Add missing imports                      |
+| Memory not persisting             | Session state reset                      | Use `st.session_state` or persistent DB  |
+| Resume parsing fails              | Bad PDF text encoding                    | Try a simpler PDF or preprocess with OCR |
 
 ---
 
-## 9. Contribution
+## 9. Contribution Guide
 
-1. Fork the repository.
-2. Create a feature branch:
+Contributions welcome during hackathon development!
 
-   ```bash
-   git checkout -b feature/new-improvement
-   ```
-3. Commit your changes and push:
+```bash
+git checkout -b feature/new-agent
+# make changes
+git add .
+git commit -m "Added TalentScout resume filtering"
+git push origin feature/new-agent
+```
 
-   ```bash
-   git add .
-   git commit -m "Add feature XYZ"
-   git push origin feature/new-improvement
-   ```
-4. Create a Pull Request (PR) on GitHub.
+Then open a **Pull Request** on GitHub.
 
 ---
-
-## Notes
-
-* Always ensure your virtual environment is activated before running Streamlit.
-* If deploying on **Streamlit Cloud**, check that your main entrypoint (`app_complete.py`) is at the repo root and that your `requirements.txt` includes every imported library.
-* The notebook and app share the same environment, so reusing the same `.venv` is recommended.
-
----
-
-
 
 
