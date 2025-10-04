@@ -1,0 +1,10 @@
+streamlit
+langchain
+openai
+pydantic
+python-dotenv
+requests
+langgraph
+pandas
+numpy
+tiktoken
