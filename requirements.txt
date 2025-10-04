@@ -1,10 +1,35 @@
-streamlit
-langchain
-openai
-pydantic
-python-dotenv
-requests
-langgraph
-pandas
-numpy
-tiktoken
+# --- Core Dependencies ---
+streamlit==1.38.0
+langchain==0.2.10
+langchain-core==0.2.27
+langchain-google-genai==1.0.7
+langgraph==0.1.7
+
+# --- NLP and Parsing ---
+spacy==3.7.4
+pdfplumber==0.11.0
+python-docx==1.1.2
+pydantic==1.10.14
+tiktoken==0.7.0
+
+# --- Machine Learning / Vector DB (optional, but useful) ---
+faiss-cpu==1.8.0
+numpy==1.26.0
+
+# --- Utilities and HTTP ---
+requests==2.31.0
+regex==2024.5.15
+
+# --- Google Generative AI SDK ---
+google-generativeai==0.8.3
+
+# --- Typing, Tools, and Compatibility ---
+typing-extensions>=4.9.0
+operator
+
+# --- Optional (for PDF/Doc parsing fallback) ---
+PyPDF2==3.0.1
+
+# --- spaCy model (installed at runtime) ---
+# You can add a post-install step or manually include it in setup:
+# python -m spacy download en_core_web_sm
